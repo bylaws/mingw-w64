@@ -5,9 +5,11 @@
  */
 #include <fenv.h>
 
-#if !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__))
+#if !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__) || \
+  defined(_ARM64EC_) || defined(__arm64ec__))
 extern int __mingw_has_sse (void);
-#endif /* !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__)) */
+#endif /* !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__) ||
+          defined(_ARM64EC_) || defined(__arm64ec__)) */
 
 /* 7.6.2.2  
    The fegetexceptflag function stores an implementation-defined
@@ -20,7 +22,7 @@ int fegetexceptflag (fexcept_t * flagp, int excepts)
   fenv_t _env;
   __asm__ volatile ("fmrx %0, FPSCR" : "=r" (_env));
   *flagp = _env.__cw & excepts & FE_ALL_EXCEPT;
-#elif defined(_ARM64_) || defined(__aarch64__)
+#elif defined(_ARM64_) || defined(__aarch64__) || defined(_ARM64EC_) || defined(__arm64ec__)
   unsigned __int64 fpcr;
   __asm__ volatile ("mrs %0, fpcr" : "=r" (fpcr));
   *flagp = fpcr & excepts & FE_ALL_EXCEPT;

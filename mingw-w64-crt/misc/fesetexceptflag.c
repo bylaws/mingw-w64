@@ -5,9 +5,11 @@
  */
 #include <fenv.h>
 
-#if !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__))
+#if !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__) || \
+  defined(_ARM64EC_) || defined(__arm64ec__))
 extern int __mingw_has_sse (void);
-#endif /* !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__)) */
+#endif /* !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__) ||
+          defined(_ARM64EC_) || defined(__arm64ec__)) */
 
 /* 7.6.2.4
    The fesetexceptflag function sets the complete status for those
@@ -29,7 +31,7 @@ int fesetexceptflag (const fexcept_t * flagp, int excepts)
   _env.__cw &= ~excepts;
   _env.__cw |= (*flagp & excepts);
   __asm__ volatile ("fmxr FPSCR, %0" : : "r" (_env));
-#elif defined(_ARM64_) || defined(__aarch64__)
+#elif defined(_ARM64_) || defined(__aarch64__) || defined(_ARM64EC_) || defined(__arm64ec__)
   unsigned __int64 fpcr;
   (void) _env;
   __asm__ volatile ("mrs %0, fpcr" : "=r" (fpcr));
