@@ -5,7 +5,8 @@
  */
 #include <fenv.h>
 
-#if !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__))
+#if !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__) || \
+  defined(_ARM64EC_) || defined(__arm64ec__))
 int __mingw_has_sse (void);
 
 int __mingw_has_sse(void)
@@ -32,7 +33,8 @@ int __mingw_has_sse(void)
     return 1;
   return 0;
 }
-#endif /* !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__)) */
+#endif /* !(defined(_ARM_) || defined(__arm__) || defined(_ARM64_) || defined(__aarch64__) ||
+          defined(_ARM64EC_) || defined(__arm64ec__)) */
 
 /* 7.6.2.1
    The feclearexcept function clears the supported exceptions
@@ -45,7 +47,7 @@ int feclearexcept (int excepts)
   __asm__ volatile ("fmrx %0, FPSCR" : "=r" (_env));
   _env.__cw &= ~(excepts & FE_ALL_EXCEPT);
   __asm__ volatile ("fmxr FPSCR, %0" : : "r" (_env));
-#elif defined(_ARM64_) || defined(__aarch64__)
+#elif defined(_ARM64_) || defined(__aarch64__) || defined(_ARM64EC_) || defined(__arm64ec__)
   unsigned __int64 fpcr;
   (void) _env;
   __asm__ volatile ("mrs %0, fpcr" : "=r" (fpcr));
