@@ -1560,7 +1560,7 @@ inline ENUMTYPE &operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((i
 
 #ifdef _AMD64_
 
-#if defined(__x86_64) && !defined(RC_INVOKED)
+#if defined(__x86_64) && !defined(__arm64ec__) && !defined(RC_INVOKED)
 
 #ifdef __cplusplus
   extern "C" {
@@ -1758,7 +1758,7 @@ extern "C" {
 #ifdef __cplusplus
   }
 #endif
-#endif /* defined(__x86_64) && !defined(RC_INVOKED) */
+#endif /* defined(__x86_64) && !defined(__arm64ec__) && !defined(RC_INVOKED) */
 
 #define EXCEPTION_READ_FAULT 0
 #define EXCEPTION_WRITE_FAULT 1
@@ -2123,9 +2123,9 @@ extern "C" {
 #endif /* _ARM_ */
 
 
-#ifdef _ARM64_
+#if defined(_ARM64_) || defined(_ARM64EC_)
 
-#if defined(__aarch64__) && !defined(RC_INVOKED)
+#if (defined(__aarch64__) || defined(__arm64ec__)) && !defined(RC_INVOKED)
 
 #ifdef __cplusplus
   extern "C" {
@@ -2195,7 +2195,7 @@ extern "C" {
 #ifdef __cplusplus
   }
 #endif
-#endif /* defined(__aarch64__) && !defined(RC_INVOKED) */
+#endif /* (defined(__aarch64__) || defined(__arm64ec__)) && !defined(RC_INVOKED) */
 
 #define EXCEPTION_READ_FAULT    0
 #define EXCEPTION_WRITE_FAULT   1
