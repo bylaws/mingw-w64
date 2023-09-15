@@ -679,6 +679,8 @@ PRIVATE_EXPORTS_TRUE
 WITH_GENLIB_FALSE
 WITH_GENLIB_TRUE
 GENLIB
+ARM64EC_FALSE
+ARM64EC_TRUE
 LIBARM32SUFFIXDIR
 LIBARM64SUFFIXDIR
 LIBX8632SUFFIXDIR
@@ -2068,7 +2070,9 @@ struct stat;
 /* Most of the following tests are stolen from RCS 5.7 src/conf.sh.  */
 struct buf { int x; };
 struct buf * (*rcsopen) (struct buf *, struct stat *, int);
-static char *e (char **p, int i)
+static char *e (p, i)
+     char **p;
+     int i;
 {
   return p[i];
 }
@@ -2119,7 +2123,6 @@ extern int puts (const char *);
 extern int printf (const char *, ...);
 extern int dprintf (int, const char *, ...);
 extern void *malloc (size_t);
-extern void free (void *);
 
 // Check varargs macros.  These examples are taken from C99 6.10.3.5.
 // dprintf is used instead of fprintf to avoid needing to declare
@@ -6471,7 +6474,7 @@ then :
   enableval=$enable_libarm64;
 else $as_nop
   case $host_cpu in #(
-  aarch64*) :
+  aarch64* | arm64*) :
     enable_libarm64=yes ;; #(
   *) :
     enable_libarm64=no ;; #(
@@ -6523,7 +6526,7 @@ case $host_cpu in #(
     libx8632suffx=lib
     libarm64suffx=libarm64
     libarm32suffx=libarm32 ;; #(
-  aarch64*) :
+  aarch64* | arm64*) :
 
     libx8664suffx=libx8664
     libx8632suffx=libx8632
@@ -6561,6 +6564,15 @@ LIBX8632SUFFIXDIR=$libx8632suffx
 LIBARM64SUFFIXDIR=$libarm64suffx
 
 LIBARM32SUFFIXDIR=$libarm32suffx
+
+
+ if test $host_cpu = arm64ec; then
+  ARM64EC_TRUE=
+  ARM64EC_FALSE='#'
+else
+  ARM64EC_TRUE='#'
+  ARM64EC_FALSE=
+fi
 
 
 # Checks for features.
@@ -7008,6 +7020,12 @@ printf %s "checking whether the linker provides __ImageBase symbol... " >&6; }
 
 cat <<_ACEOF >conftest.$ac_ext
 extern unsigned char __ImageBase[];
+
+#ifdef __arm64ec__
+// Define a dummy call helper to satisfy the linker
+void *__os_arm64x_dispatch_ret;
+#endif
+
 void __main(void) {
 }
 int main(void) {
@@ -7304,6 +7322,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${LIBARM64_TRUE}" && test -z "${LIBARM64_FALSE}"; then
   as_fn_error $? "conditional \"LIBARM64\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${ARM64EC_TRUE}" && test -z "${ARM64EC_FALSE}"; then
+  as_fn_error $? "conditional \"ARM64EC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${WITH_GENLIB_TRUE}" && test -z "${WITH_GENLIB_FALSE}"; then
