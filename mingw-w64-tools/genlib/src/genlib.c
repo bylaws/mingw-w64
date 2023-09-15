@@ -150,7 +150,8 @@ static int set_machine(const char *target)
     { "x86",     0x014C },
     { "x86_64",  0x8664 },
     { "arm",     0x01C4 },
-    { "aarch64", 0xAA64 }
+    { "aarch64", 0xAA64 },
+    { "arm64x",  0xA64E }
   };
 
   unsigned int i;
