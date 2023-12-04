@@ -29,7 +29,7 @@ libpthread_a_SOURCES =
 libpthread_a_DEPENDENCIES = libwinpthread.la
 #FIXME: Use cp kludge until a better method presents itself
 #libpthread_a_LIBADD = $(LT_OBJDIR)/libwinpthread.a
-libpthread_a_AR = cp -f $(LT_OBJDIR)/libwinpthread.a
+libpthread_a_AR = cp -f $(LT_OBJDIR)/libwinpthread.lib
 endif
 
 if COPY_SHARED
