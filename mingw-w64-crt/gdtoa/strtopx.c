@@ -127,12 +127,14 @@ __strtold (const char * __restrict__ src, char ** __restrict__ endptr)
 }
 
 long double __cdecl
-__mingw_strtold (const char * __restrict__ src, char ** __restrict__ endptr)
-  __attribute__((alias("__strtold")));
+__mingw_strtold (const char * __restrict__ src, char ** __restrict__ endptr) {
+	return __strtold(src, endptr);
+}
 
 long double __cdecl
-strtold (const char * __restrict__ src, char ** __restrict__ endptr)
-  __attribute__((alias("__strtold")));
+strtold (const char * __restrict__ src, char ** __restrict__ endptr) {
+	return __strtold(src, endptr);
+}
 
 #elif defined(__arm__) || defined(__aarch64__) || defined(__arm64ec__) || \
   defined(_ARM_) || defined(_ARM64_) || defined(_ARM64EC_)

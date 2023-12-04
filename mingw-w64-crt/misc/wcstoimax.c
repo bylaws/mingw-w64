@@ -117,5 +117,6 @@ wcstoimax(const wchar_t * __restrict__ nptr, wchar_t ** __restrict__ endptr, int
 		return (intmax_t)(minus ? -accum : accum);
 	}
 
-long long __attribute__ ((alias ("wcstoimax")))
-wcstoll (const wchar_t* __restrict__ nptr, wchar_t ** __restrict__ endptr, int base);
+long long wcstoll (const wchar_t* __restrict__ nptr, wchar_t ** __restrict__ endptr, int base) {
+    return wcstoimax(nptr, endptr, base);
+}

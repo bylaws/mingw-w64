@@ -74,5 +74,6 @@ float __strtof (const char *s, char **sp)
 }
 
 float __cdecl
-__mingw_strtof (const char * __restrict__ src, char ** __restrict__ endptr)
-  __attribute__((alias("__strtof")));
+__mingw_strtof (const char * __restrict__ src, char ** __restrict__ endptr) {
+	return __strtof(src, endptr);
+}

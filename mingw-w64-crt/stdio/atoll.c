@@ -9,5 +9,5 @@
 long long __cdecl atoll(const char * nptr) { return strtoll(nptr, NULL, 10); }
 long long (__cdecl *__MINGW_IMP_SYMBOL(atoll))(const char *) = atoll;
 
-__int64 __attribute__((alias("atoll"))) __cdecl _atoi64(const char * nptr);
+__int64 __cdecl _atoi64(const char * nptr) { return atoll(nptr); }
 __int64 (__cdecl *__MINGW_IMP_SYMBOL(_atoi64))(const char *) = _atoi64;
