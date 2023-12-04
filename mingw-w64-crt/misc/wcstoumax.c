@@ -111,5 +111,7 @@ wcstoumax(const wchar_t * __restrict__ nptr, wchar_t ** __restrict__ endptr, int
 		return minus ? -accum : accum;	/* (yes!) */
 	}
 
-unsigned long long __attribute__ ((alias ("wcstoumax")))
-wcstoull (const wchar_t* __restrict__ nptr, wchar_t ** __restrict__ endptr, int base);
+unsigned long long
+wcstoull (const wchar_t* __restrict__ nptr, wchar_t ** __restrict__ endptr, int base) {
+    return wcstoumax(nptr, endptr, base);
+}
