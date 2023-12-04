@@ -53,9 +53,9 @@ pthread_spin_lock (pthread_spinlock_t *lock)
   volatile spinlock_word_t *lk = (volatile spinlock_word_t *)lock;
   while (unlikely(__sync_lock_test_and_set(lk, 0) == 0))
     do {
-#if defined(__i386__) || defined(__x86_64__)
+#if defined(__i386__) || (defined(__x86_64__) && !defined(__arm64ec__))
       asm("pause" ::: "memory");
-#elif defined(__arm__) || defined(__aarch64__)
+#elif defined(__arm__) || defined(__aarch64__) || defined(__arm64ec__)
       asm("wfe" ::: "memory");
 #else
 #error Unsupported architecture

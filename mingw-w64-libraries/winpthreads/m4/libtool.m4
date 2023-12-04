@@ -5616,11 +5616,11 @@ _LT_EOF
 	# Tell ltmain to make .dll files, not .so files.
 	shrext_cmds=.dll
 	# FIXME: Setting linknames here is a bad hack.
-	_LT_TAGVAR(archive_cmds, $1)='$CC -o $lib $libobjs $compiler_flags `func_echo_all "$deplibs" | $SED '\''s/ -lc$//'\''` -link -dll~linknames='
+	_LT_TAGVAR(archive_cmds, $1)='$CC -o $lib $libobjs $compiler_flags `func_echo_all "$deplibs" | $SED '\''s/ -lc$//'\''` -shared~linknames='
 	# The linker will automatically build a .lib file if we build a DLL.
 	_LT_TAGVAR(old_archive_from_new_cmds, $1)='true'
 	# FIXME: Should let the user specify the lib program.
-	_LT_TAGVAR(old_archive_cmds, $1)='lib -OUT:$oldlib$oldobjs$old_deplibs'
+	_LT_TAGVAR(old_archive_cmds, $1)='lib.exe -machine:arm64ec -OUT:$oldlib$oldobjs$old_deplibs'
 	_LT_TAGVAR(enable_shared_with_static_runtimes, $1)=yes
 	;;
       esac
