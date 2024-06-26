@@ -100,10 +100,8 @@
 #  ifndef __MINGW_USE_UNDERSCORE_PREFIX
      /* As we have to support older gcc version, which are using underscores
       as symbol prefix for x64, we have to check here for the user label
-      prefix defined by gcc. ARM64EC also defines __USER_LABEL_PREFIX__ to #,
-      however in that case __imp symbols do not require the prefix so the
-      handling cannot be made generic. */
-#    if defined(__USER_LABEL_PREFIX__) && !defined(_ARM64EC_)
+      prefix defined by gcc. */
+#    if defined(__USER_LABEL_PREFIX__)
 #      pragma push_macro ("_")
 #      undef _
 #      define _ 1
@@ -132,8 +130,12 @@
 #  define __MINGW_IMP_SYMBOL(sym) __imp_##sym
 #  define __MINGW_IMP_LSYMBOL(sym) __imp_##sym
 #  ifdef _ARM64EC_
-#    define __MINGW_USYMBOL(sym) \
-       __MINGW64_STRINGIFY(__MINGW64_GLUE(__HASH, sym))
+#    ifdef __ASSEMBLER__
+#      define __MINGW_USYMBOL(sym) \
+         __MINGW64_STRINGIFY(__MINGW64_GLUE(__HASH, sym))
+#    else
+#      define __MINGW_USYMBOL(sym) "#" __MINGW64_STRINGIFY(sym)
+#    endif
 #  else
 #    define __MINGW_USYMBOL(sym) sym
 #  endif
