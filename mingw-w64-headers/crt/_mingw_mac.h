@@ -149,9 +149,7 @@
 
 
 #ifdef _ARM64EC_
-/* USYMBOL implictly stringifies on ARM64EC since assembler directives cannot
-otherwise begin with a '#' */
-#define __MINGW_ASM_CALL(func) __asm__(__MINGW_USYMBOL(func))
+#define __MINGW_ASM_CALL(func) __asm__(__MINGW64_STRINGIFY(func))
 #else
 #define __MINGW_ASM_CALL(func) __asm__(__MINGW64_STRINGIFY(__MINGW_USYMBOL(func)))
 
